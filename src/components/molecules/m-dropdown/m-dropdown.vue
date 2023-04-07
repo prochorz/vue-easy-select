@@ -1,0 +1,61 @@
+<template>
+    <ul class="m-dropdown">
+        <li
+            v-for="(item, index) in optionsList"
+            :key="item[globalProps.keyField]"
+            role="option"
+            class="dropdown__item"
+            @click="clickHandler(item)"
+        >
+            <slot name="item" :item="localOptions[index]">
+                <div
+                    :class="item.additionalClass"
+                    class="dropdown__item-inner"
+                >
+                    {{ item[globalProps.nameField] }}
+                </div>
+            </slot>
+        </li>
+    </ul>
+</template>
+
+<script>
+import { computed } from 'vue';
+
+import { useInject } from '../../../use/use-context';
+export default {
+    name: "MDropdown",
+    setup() {
+        const { globalProps, localValue, localOptions, checkSelectedValue } = useInject();
+
+        const optionsList = computed(() => {
+            return localOptions.value.map(option => {
+                const checkedClass = option.isChecked ? 'dropdown__item-inner--checked' : null;
+                const disabledClass = option[globalProps.disabledField] ? 'dropdown__item-inner--disabled' : null;
+                return {
+                    ...option,
+                    additionalClass: [checkedClass, disabledClass]
+                }
+            })
+        });
+
+        function clickHandler(option) {
+            if (!option[globalProps.disabledField]) {
+                const optionValue = option[globalProps.keyField];
+                const isUnselect = globalProps.isAllowEmpty && checkSelectedValue(optionValue);
+
+                localValue.value = !isUnselect ? optionValue : undefined;
+            }
+        }
+
+        return {
+            optionsList,
+            globalProps,
+            localOptions,
+            clickHandler
+        };
+    }
+}
+</script>
+
+<style scoped lang="scss" src="./m-dropdown.scss" />

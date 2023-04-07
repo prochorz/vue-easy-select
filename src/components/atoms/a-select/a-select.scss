@@ -1,0 +1,312 @@
+@import "../../../assets/scss/mixins";
+@import "../../../assets/scss/variables";
+
+@mixin theme($type) {
+    $that: &;
+
+    @at-root {
+        .select--#{$type} {
+            &#{$that} {
+                @content;
+            }
+        }
+    }
+}
+
+%control {
+    .select__control {
+        @include font-12-regular;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: $gray-000;
+        cursor: pointer;
+
+        &.select__control--disabled {
+            cursor: not-allowed;
+        }
+
+        &.select__control--error {
+            border-bottom: 1px solid $red-500;
+        }
+    }
+
+    .select__control-content {
+        position: relative;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        height: 100%;
+        gap: 8px;
+    }
+
+    .select__control-inert {
+        @include theme("normal") {
+            min-height: 16px;
+        }
+        display: flex;
+        flex: 1;
+        align-items: center;
+        height: 100%;
+        gap: 8px;
+    }
+
+    .select__control-title,
+    .select__control-suffix {
+        @include line-clamp;
+    }
+
+    .select__control-suffix {
+        @include theme("normal") {
+            color: $gray-600;
+        }
+        @include theme("small") {
+            color: $gray-450;
+        }
+    }
+
+    .select__control-icon {
+        fill: $gray-600;
+    }
+}
+
+.a-select {
+    @extend %control;
+    @include theme("normal") {
+        min-height: 40px;
+    }
+    @include theme("small") {
+        min-height: 32px;
+    }
+    display: block;
+
+    .select__control {
+        @include theme("normal") {
+            padding: 8px 12px;
+        }
+        @include theme("small") {
+            padding: 4px 8px;
+        }
+        min-height: inherit;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background: $gray-900;
+
+        &:not(.select__control--disabled) {
+            &:hover,
+            &.select__control--open {
+                background: $gray-950;
+
+                .select__control-icon--arrow {
+                    fill: $gray-000;
+                }
+            }
+        }
+
+        &.select__control--disabled {
+            background: $gray-850;
+            color: $gray-300;
+        }
+
+        &.select__control--empty {
+            color: $gray-400;
+        }
+    }
+
+    .select__control-icon--arrow {
+        align-self: flex-end;
+        margin-bottom: 4px;
+    }
+
+    .select__control-inert {
+        flex-wrap: wrap;
+    }
+
+    .select__control-description {
+        @include font-10-regular;
+        margin-top: 6px;
+        font-family: $t-font-roboto;
+
+        &.select__control-description--error {
+            color: $red-500;
+        }
+    }
+
+    .select__tag-wrapper {
+        gap: 4px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-basis: 100%;
+    }
+
+    .select__tag-item {
+        cursor: auto;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        max-width: 80px;
+        padding: 4px 6px;
+        border-radius: 2px;
+        background: $gray-825;
+        overflow: hidden;
+    }
+
+    .select__tag-item-name {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .select__tag-item-close {
+        cursor: pointer;
+        fill: $gray-500;
+        margin: -4px;
+        padding: 4px;
+
+        &:hover {
+            fill: $gray-100;
+        }
+    }
+}
+
+.a-select-dropdown {
+    @extend %control;
+
+    &.v-popper__popper .v-popper__wrapper .v-popper__inner {
+        max-height: 300px;
+    }
+
+    .v-popper__arrow-container {
+        display: none;
+    }
+
+    .dropdown-wrapper__body {
+        @include theme("normal") {
+            background: $gray-875;
+        }
+        @include theme("small") {
+            background: $gray-800;
+        }
+        max-height: inherit;
+        overflow: hidden;
+    }
+
+    .select__control-not-found {
+        cursor: pointer;
+        color: $gray-300;
+    }
+
+    .select__item-list {
+        @include theme("small") {
+            padding: 4px;
+        }
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .select__search-wrapper {
+        @include theme("normal") {
+            height: 40px;
+        }
+        @include theme("small") {
+            height: 32px;
+        }
+        position: relative;
+        background: $gray-1000;
+    }
+
+    .select__search {
+        @include font-12-regular;
+        @include theme("normal") {
+            padding: 13px 12px 13px 32px;
+        }
+        @include theme("small") {
+            padding: 8px;
+        }
+        width: 100%;
+        height: inherit;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        background: transparent;
+        color: $gray-000;
+
+        &::placeholder {
+            color: $gray-400;
+        }
+    }
+
+    .select__search-icon {
+        position: absolute;
+        fill: $gray-600;
+        top: 50%;
+        left: 13px;
+        transform: translateY(-50%);
+    }
+
+    .select__overlay {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: rgba($gray-875, 0.56);
+    }
+
+    .select__control {
+        @include theme("normal") {
+            padding: 12px;
+            border-bottom: 1px solid $gray-900;
+        }
+        @include theme("small") {
+            padding: 8px;
+            border-bottom: 1px solid transparent;
+            border-radius: 2px;
+        }
+
+        &:not(.select__control--disabled, .select__control-not-found) {
+            &:hover {
+                @include theme("normal") {
+                    background: $gray-950;
+                }
+                @include theme("small") {
+                    background: $gray-750;
+                }
+
+                .select__control-icon {
+                    fill: $gray-000;
+                }
+
+                .select__control-icon--arrow {
+                    fill: $gray-000;
+                }
+            }
+        }
+
+        &.select__control--disabled {
+            @include theme("normal") {
+                background: $gray-800;
+                color: $gray-300;
+            }
+            @include theme("small") {
+                background: $gray-800;
+                color: $gray-400;
+            }
+        }
+    }
+
+    .select__control-content {
+        @include theme("normal") {
+            display: flex;
+            gap: 8px;
+        }
+    }
+
+    .select__control-icon {
+        &.select__control-icon--check {
+            fill: $lavender-500 !important;
+        }
+    }
+}
