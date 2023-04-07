@@ -7,7 +7,10 @@
             class="dropdown__item"
             @click="clickHandler(item)"
         >
-            <slot name="item" :item="localOptions[index]">
+            <slot
+                :item="localOptions[index]"
+                name="item"
+            >
                 <div
                     :class="item.additionalClass"
                     class="dropdown__item-inner"
@@ -25,7 +28,10 @@ import { computed } from 'vue';
 import { useInject } from '../../../use/use-context';
 export default {
     name: "MDropdown",
-    setup() {
+    emits: {
+        '@selected': null
+    },
+    setup(_, { emit }) {
         const { globalProps, localValue, localOptions, checkSelectedValue } = useInject();
 
         const optionsList = computed(() => {
@@ -45,6 +51,8 @@ export default {
                 const isUnselect = globalProps.isAllowEmpty && checkSelectedValue(optionValue);
 
                 localValue.value = !isUnselect ? optionValue : undefined;
+
+                emit('@selected', option);
             }
         }
 

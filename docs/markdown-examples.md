@@ -4,19 +4,27 @@ This page demonstrates some of the built-in markdown extensions provided by Vite
 
 ## Markdown Content
 
-<ADvancedWrapperSelect v-model="localValue" :name="name" :options="options">
-    <MInput />
-    <MDropdown />
+<ADvancedWrapperSelect v-model="localValue" name="select" :options="options">
+    <VDropdown auto-size="min">
+        <MInput />
+        <template #popper="{ hide }">
+            <MDropdown @@selected="hide" />
+        </template>
+    </VDropdown>
 </ADvancedWrapperSelect>
 
-```vue
+```vue{6}
 <ADvancedWrapperSelect
     v-model="localValue"
-    :name="name"
     :options="options"
+    name="select"
 >
-    <MInput />
-    <MDropdown />
+    <VDropdown auto-size="min">
+        <MInput />
+        <template #popper="{ hide }">
+            <MDropdown @@selected="hide" />
+        </template>
+    </VDropdown>
 </ADvancedWrapperSelect>
 ```
 
@@ -67,6 +75,7 @@ export default {
             name.value = String(Number(name.value) + 1);
             name2.value = String(Number(name2.value) + 1);
         }, 500);
+
         return {
             name,
             name2,

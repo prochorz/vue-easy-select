@@ -1,8 +1,5 @@
 <template>
-    <div>
-        name: {{ globalProps.name }}
-        <slot />
-    </div>
+    <slot />
 </template>
 
 <script lang="ts">
@@ -84,7 +81,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<style scoped>
-
-</style>
