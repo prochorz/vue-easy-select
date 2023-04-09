@@ -1,5 +1,5 @@
 <template>
-    <ul class="m-dropdown">
+    <ul class="ad-options">
         <li
             v-for="(item, index) in optionsList"
             :key="item[globalProps.keyField]"
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
-import { useInject } from '../../../use/use-context';
+import { useInject } from '../../use/use-context';
 export default {
-    name: "MDropdown",
+    name: "ADOptions",
     emits: {
         '@selected': null
     },
@@ -66,4 +66,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss" src="./m-dropdown.scss" />
+<style scoped lang="scss" src="./ad-options.scss" />

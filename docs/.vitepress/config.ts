@@ -15,6 +15,9 @@ export default defineConfig({
       {
         text: 'Examples',
         items: [
+          { text: 'AD Wrapper', link: '/ad-wrapper' },
+          { text: 'AD Select', link: '/ad-select' },
+          { text: 'AD Multiple Select', link: '/ad-multiple-select' },
           { text: 'Markdown Examples', link: '/markdown-examples' },
           { text: 'Runtime API Examples', link: '/api-examples' }
         ]

@@ -1,9 +1,10 @@
+import type { SetupContext } from '@vue/runtime-core';
+
 import {
     computed,
-    reactive,
-    inject, provide, ref} from 'vue';
-
-import type {SetupContext, } from "@vue/runtime-core";
+    inject,
+    provide
+} from 'vue';
 
 import { isObject } from '../services/data-services';
 import { selectInjectionKey } from '../constants/app-constants';
@@ -14,7 +15,9 @@ function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, {
     }
 
     const localValue = computed({
-        get: () => props.modelValue,
+        get: () => {
+            return props.modelValue;
+        },
         set(value) {
             /**
              * Emit on change input value

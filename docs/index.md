@@ -11,6 +11,9 @@ hero:
       text: Markdown Examples
       link: /markdown-examples
     - theme: alt
+      text: AD Wrapper
+      link: /ad-wrapper
+    - theme: alt
       text: API Examples
       link: /api-examples
 
