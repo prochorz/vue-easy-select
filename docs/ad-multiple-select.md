@@ -6,11 +6,9 @@ This page demonstrates some of the built-in markdown extensions provided by Vite
 
 <ADWrapper v-model="localValue" name="select" :options="options" :is-multiple="true">
     <VDropdown auto-size="min">
-        <template #default="{ shown }">
-            <ADControl :is-open="shown"/>
-        </template>
-        <template #popper="{ hide }">
-            <ADOptions @@selected="hide" />
+        <ADControl />
+        <template #popper>
+            <ADOptions />
         </template>
     </VDropdown>
 </ADWrapper>
@@ -28,11 +26,9 @@ This page demonstrates some of the built-in markdown extensions provided by Vite
         name="select"
     >
         <Dropdown auto-size="min">
-            <template #default="{ shown }">
-                <ADControl :is-open="shown"/>
-            </template>
-            <template #popper="{ hide }">
-                <ADOptions @@selected="hide" />
+            <ADControl />
+            <template #popper>
+                <ADOptions />
             </template>
         </Dropdown>
     </ADWrapper>
