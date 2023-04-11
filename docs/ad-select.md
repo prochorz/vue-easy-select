@@ -22,6 +22,9 @@ This page demonstrates some of the built-in markdown extensions provided by Vite
     <template #arrow="{ isOpen }">
         {{ isOpen ? "⬆️" : "⬇️" }}
     </template>
+    <template #item="{ item }">
+        {{ item.disabled ? '⚪️' : !item.isChecked ? "⚫️" : "🔘️" }} {{ item.name }}
+    </template>
 </ADSelect>
 
 ```vue{11-18}

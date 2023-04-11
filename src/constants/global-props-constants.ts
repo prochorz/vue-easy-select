@@ -1,16 +1,34 @@
 import type { PropType } from 'vue';
 
-const singlePropsValue = {
-    type: [String, Number, Boolean],
-    default: ''
+const singleProps = {
+    /**
+     * Initial Value
+     */
+    modelValue: {
+        type: [String, Number, Boolean],
+        default: ''
+    },
+    /**
+     * Flag for once there is a value it can’t be deselected
+     * Only for not Multiple Mode
+     */
+    isAllowEmpty: {
+        type: Boolean,
+        default: false
+    }
 };
 
-const multiplePropsValue = {
-    type: Array as PropType<Array<any>>,
-    default: []
+const multipleProps = {
+    /**
+     * Initial Value
+     */
+    modelValue: {
+        type: Array as PropType<Array<any>>,
+        default: []
+    }
 };
 
-const componentProps = {
+const stubProps = {
     /**
      * Initial Value
      */
@@ -18,6 +36,24 @@ const componentProps = {
         type: null,
         default: null
     },
+    /**
+     * Flag for once there is a value it can’t be deselected
+     * Only for not Multiple Mode
+     */
+    isAllowEmpty: {
+        type: Boolean,
+        default: false
+    },
+    /**
+     * Enable Multiple mod
+     */
+    isMultiple: {
+        type: Boolean,
+        default: false
+    }
+}
+
+const componentProps = {
     /**
      * Select name
      */
@@ -62,26 +98,12 @@ const componentProps = {
     disabledField: {
         type: String,
         default: 'disabled'
-    },
-    /**
-     * Flag for once there is a value it can’t be deselected
-     * Only for not Multiple Mode
-     */
-    isAllowEmpty: {
-        type: Boolean,
-        default: false
-    },
-    /**
-     * Enable Multiple mod
-     */
-    isMultiple: {
-        type: Boolean,
-        default: false
     }
 };
 
 export {
-    componentProps,
-    singlePropsValue,
-    multiplePropsValue
+    stubProps,
+    singleProps,
+    multipleProps,
+    componentProps
 };

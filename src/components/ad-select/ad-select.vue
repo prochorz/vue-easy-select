@@ -33,7 +33,11 @@
                 <ADOptions
                   class="ad-select__dropdown-inner"
                   @@selected="selectHandler"
-                />
+                >
+                    <template #item="{ item }">
+                        <slot name="item" :item="item" />
+                    </template>
+                </ADOptions>
             </div>
           </Transition>
       </Teleport>

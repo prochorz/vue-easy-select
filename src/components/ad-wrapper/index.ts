@@ -4,17 +4,17 @@ import { h } from 'vue'
 
 import { useProvide } from '../../use/use-context';
 import {
-    componentProps,
-    singlePropsValue,
-    multiplePropsValue
+    stubProps,
+    singleProps,
+    multipleProps,
+    componentProps
 } from '../../constants/global-props-constants';
 
 const Single = {
     props: {
-        ...componentProps,
-        modelValue: singlePropsValue
+        ...singleProps,
+        ...componentProps
     },
-    emits: ['update:modelValue'],
     setup(props, ctx) {
         useProvide(props, ctx);
         return ctx.slots.default;
@@ -23,10 +23,9 @@ const Single = {
 
 const Multiple = {
     props: {
-        ...componentProps,
-        modelValue: multiplePropsValue
+        ...multipleProps,
+        ...componentProps
     },
-    emits: ['update:modelValue'],
     setup(props, ctx) {
         useProvide(props, ctx);
         return ctx.slots.default;
@@ -36,11 +35,17 @@ const Multiple = {
 function ADWrapper(props, ctx) {
     const isMultiple = props.isMultiple;
     const localComponent = isMultiple ? Multiple : Single;
+    const localProps = Object.keys(localComponent.props).reduce((acc, key) => {
+        acc[key] = props[key];
+        return acc;
+    }, {});
 
-    return h(localComponent as Component, { ...ctx.attrs, ...props }, ctx.slots)
+    return h(localComponent as Component, { ...ctx.attrs, ...localProps }, ctx.slots)
 }
 
-ADWrapper.props = componentProps;
-// RenderComponent.emits = ['update:modelValue']
+ADWrapper.props = {
+    ...stubProps,
+    ...componentProps
+};
 
 export default ADWrapper;
