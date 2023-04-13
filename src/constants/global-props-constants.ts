@@ -25,6 +25,13 @@ const multipleProps = {
     modelValue: {
         type: Array as PropType<Array<any>>,
         default: []
+    },
+    /**
+     * Enable Multiple mod
+     */
+    isMultiple: {
+        type: Boolean,
+        default: false
     }
 };
 

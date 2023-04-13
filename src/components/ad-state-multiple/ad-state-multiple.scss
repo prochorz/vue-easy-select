@@ -1,0 +1,58 @@
+$size: 10px;
+$color: currentColor;
+$thickness: 2px;
+
+.ad-state-multiple {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+
+  .state-multiple__item {
+    cursor: auto;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    background: #dee2e6;
+    color: #495057;
+    padding: 4px 10px;
+    height: 32px;
+    border-radius: 16px;
+  }
+
+  .state-multiple__cross {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    position: relative;
+    width: $size;
+    height: $size;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      top: ($size - $thickness) * 0.5;
+      left: 0;
+      right: 0;
+      height: $thickness;
+      background: #495057;
+      border-radius: $thickness;
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+
+    &:hover {
+      &:before, &:after {
+        opacity: .5;
+      }
+    }
+  }
+}

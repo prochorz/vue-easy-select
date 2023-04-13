@@ -32,7 +32,11 @@ export default {
         '@selected': null
     },
     setup(_, { emit }) {
-        const { globalProps, localValue, localOptions, checkSelectedValue } = useInject();
+        const {
+            globalProps,
+            localOptions,
+            selectHandler
+        } = useInject();
 
         const optionsList = computed(() => {
             return localOptions.value.map(option => {
@@ -46,12 +50,9 @@ export default {
         });
 
         function clickHandler(option) {
+            selectHandler(option);
+
             if (!option[globalProps.disabledField]) {
-                const optionValue = option[globalProps.keyField];
-                const isUnselect = globalProps.isAllowEmpty && checkSelectedValue(optionValue);
-
-                localValue.value = !isUnselect ? optionValue : undefined;
-
                 emit('@selected', option);
             }
         }

@@ -1,7 +1,5 @@
 <template>
-  <ADWrapper
-    :is-disabled="isDisabled"
-  >
+  <ADWrapper v-bind="{ ...$props, ...$attrs }">
       <div
         ref="refControl"
         :class="[disabledClass, openClass]"
@@ -55,14 +53,15 @@ import ADWrapper from '../ad-wrapper';
 import ADControl from '../ad-control';
 import ADOptions from '../ad-options';
 
-import { componentProps } from '../../constants/global-props-constants';
+import {componentProps, stubProps} from '../../constants/global-props-constants';
 
 const MAX_HEIGHT = 200;
 
 export default defineComponent({
     name: 'ADSelect',
     props: {
-        isDisabled: componentProps.isDisabled
+        ...stubProps,
+        ...componentProps
     },
     components: {
         ADWrapper,
@@ -110,7 +109,11 @@ export default defineComponent({
         }
 
         function selectHandler() {
-            toggleHandler();
+            const isToggleExist = !props.isMultiple && props.isAllowEmpty;
+
+            if (isToggleExist) {
+                toggleHandler();
+            }
         }
 
         async function outSideClick(event) {

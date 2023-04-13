@@ -1,3 +1,7 @@
+import type {
+    TModelValue,
+    ISelectOption
+} from '../types/select.type';
 import type { SetupContext } from '@vue/runtime-core';
 
 import {
@@ -10,22 +14,23 @@ import { isObject } from '../services/data-services';
 import { selectInjectionKey } from '../constants/app-constants';
 
 function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, { emit }: SetupContext) {
-    function checkSelectedValue(value: any) {
-        return localValue.value === value;
-    }
 
     const localValue = computed({
-        get: () => {
-            return props.modelValue;
-        },
+        get: () => props.modelValue,
         set(value) {
             /**
              * Emit on change input value
-             * @property { String } value
+             * @property { String | Array } value
              */
             emit('update:modelValue', value);
         }
     });
+
+    function checkSelectedValue(value: any) {
+        return props.isMultiple
+            ? (localValue.value as Array<TModelValue>).includes(value)
+            : localValue.value === value;
+    }
 
     const normalizeOptions = computed<Array<any>>(() => {
         const isOptionObject = isObject(props.options[0]);
@@ -52,10 +57,39 @@ function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, {
         });
     });
 
+    const currentState = computed(() => {
+        if (props.isMultiple) {
+            return normalizeOptions.value.filter(item => checkSelectedValue(item[props.keyField]));
+        }
+
+        return normalizeOptions.value.find(item => checkSelectedValue(item[props.keyField]));
+    });
+
+    function selectHandler(option: ISelectOption) {
+        const newOptionValue = option[props.keyField];
+        const isSelected = checkSelectedValue(newOptionValue);
+        let newValue = isSelected && props.isAllowEmpty ? '' : newOptionValue;
+
+        if (props.isMultiple) {
+            if (isSelected) {
+                newValue = (localValue.value as Array<TModelValue>).filter(item => item !== newOptionValue);
+            } else {
+                newValue = [...localValue.value as Array<TModelValue>, newOptionValue];
+            }
+        }
+
+        if (!option.isDisabled) {
+            localValue.value = newValue;
+        }
+    }
+
     const context = {
         globalProps: props,
+        currentState,
         localValue,
         localOptions,
+        normalizeOptions,
+        selectHandler,
         checkSelectedValue
     };
 
