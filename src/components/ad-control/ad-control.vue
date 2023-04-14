@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="refContent"
     :class="[disabledClass]"
     class="ad-control"
   >
@@ -33,14 +34,18 @@
 import type { TModelValue } from '../../types/select.type';
 
 import {
+    ref,
+    watch,
     computed,
     defineComponent
 } from 'vue';
 
-import AdStateMultiple from '../ad-state-multiple';
 import NativeSelect from '../native-select';
+import AdStateMultiple from '../ad-state-multiple';
 
 import { useInject } from '../../use/use-context';
+import useResizeObserver from '../../use/use-resize-observer';
+
 export default defineComponent({
     name: "ADControl",
     components: {
@@ -50,13 +55,17 @@ export default defineComponent({
     emits: {
         'update:modelValue': null
     },
-    setup() {
+    setup(_, { emit }) {
         const {
             currentState,
             globalProps,
             localValue,
             localOptions
         } = useInject();
+
+        const refContent = ref();
+
+        const { height } = useResizeObserver(refContent);
 
         const isMultiple = computed(() => Boolean(globalProps.isMultiple));
         const disabledClass = computed(() => globalProps.isDisabled ? 'input--disabled' : null)
@@ -67,7 +76,14 @@ export default defineComponent({
                 : !localValue.value;
         });
 
+        function resizeHandler() {
+            emit('@resize');
+        }
+
+        watch(height, resizeHandler)
+
         return {
+            refContent,
             currentState,
             isMultiple,
             isEmptyValue,

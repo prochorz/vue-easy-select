@@ -6,7 +6,7 @@
         class="ad-select__control"
         @click="toggleHandler"
       >
-          <ADControl>
+          <ADControl @@resize="updateDropdownStyle">
               <template #arrow>
                   <slot name="arrow" :is-open="isOpen">
                       <i class="ad-select__arrow-icon" />
@@ -53,7 +53,10 @@ import ADWrapper from '../ad-wrapper';
 import ADControl from '../ad-control';
 import ADOptions from '../ad-options';
 
-import {componentProps, stubProps} from '../../constants/global-props-constants';
+import {
+    stubProps,
+    componentProps
+} from '../../constants/global-props-constants';
 
 const MAX_HEIGHT = 200;
 
@@ -143,9 +146,9 @@ export default defineComponent({
             dropdownClass,
             toggleHandler,
             selectHandler,
+            updateDropdownStyle,
             subscribeOutsideClick,
-            unsubscribeOutsideClick,
-            updateDropdownStyle
+            unsubscribeOutsideClick
         };
     }
 })
