@@ -9,6 +9,7 @@ $thickness: 2px;
 
   .state-multiple__item {
     cursor: auto;
+    box-sizing: border-box;
     display: flex;
     gap: 4px;
     align-items: center;

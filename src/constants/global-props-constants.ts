@@ -41,7 +41,7 @@ const stubProps = {
      */
     modelValue: {
         type: null,
-        default: null
+        default: undefined
     },
     /**
      * Flag for once there is a value it can’t be deselected
@@ -69,11 +69,25 @@ const componentProps = {
         required: true
     },
     /**
+     * Flag for enable search in select
+     */
+    isSearchable: {
+        type: Boolean,
+        default: false
+    },
+    /**
      * Enable/Disable input field
      */
     isDisabled: {
         type: Boolean,
         default: false
+    },
+    /**
+     * Input placeholder text.
+     */
+    placeholder: {
+        type: String,
+        default: ''
     },
     /**
      * The list of Options.
@@ -83,7 +97,7 @@ const componentProps = {
      */
     options: {
         type: Array as PropType<Array<any>>,
-        required: true
+        default: []
     },
     /**
      * The unique key for Options items.

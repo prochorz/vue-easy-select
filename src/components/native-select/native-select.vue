@@ -8,7 +8,7 @@
     >
         <option
                 v-for="option in localOptions"
-                :key="option[globalProps.keyField]"
+                :key="option.key"
                 :value="option[globalProps.keyField]"
                 :disabled="option.isDisabled"
         >

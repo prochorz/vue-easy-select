@@ -6,14 +6,14 @@
   >
       <div class="input__content">
           <span v-if="isEmptyValue">
-              placeholder
+              {{ placeholder }}
           </span>
           <template v-else>
               <slot name="state" :state="currentState">
                   <AdStateMultiple v-if="isMultiple" />
                   <template v-else>
                     <span>
-                      {{ localValue }}
+                      {{ localValueName }}
                     </span>
                   </template>
               </slot>
@@ -36,6 +36,7 @@ import type { TModelValue } from '../../types/select.type';
 import {
     ref,
     watch,
+    toRefs,
     computed,
     defineComponent
 } from 'vue';
@@ -53,6 +54,7 @@ export default defineComponent({
         AdStateMultiple
     },
     emits: {
+        '@resize': null,
         'update:modelValue': null
     },
     setup(_, { emit }) {
@@ -67,13 +69,21 @@ export default defineComponent({
 
         const { height } = useResizeObserver(refContent);
 
+        const { placeholder, isSearchable } = toRefs(globalProps);
         const isMultiple = computed(() => Boolean(globalProps.isMultiple));
+
         const disabledClass = computed(() => globalProps.isDisabled ? 'input--disabled' : null)
 
         const isEmptyValue = computed(() => {
-            return isMultiple.value
-                ? !(localValue.value as Array<TModelValue>).length
-                : !localValue.value;
+            if (isMultiple.value) {
+                return !(localValue.value as Array<TModelValue>).length;
+            }
+
+            return localOptions.value.every(item => item[globalProps.keyField] !== localValue.value)
+        });
+
+        const localValueName = computed(() => {
+            return localOptions.value.find(item => item[globalProps.keyField] === localValue.value)?.[globalProps.nameField]
         });
 
         function resizeHandler() {
@@ -85,12 +95,14 @@ export default defineComponent({
         return {
             refContent,
             currentState,
+            placeholder,
             isMultiple,
             isEmptyValue,
             localValue,
             globalProps,
             localOptions,
-            disabledClass
+            disabledClass,
+            localValueName
         }
     }
 })

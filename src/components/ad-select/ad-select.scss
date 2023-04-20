@@ -14,6 +14,7 @@
   }
 
   .ad-select__arrow-icon {
+    box-sizing: border-box;
     width: 9px;
     height: 9px;
     transform: rotate(45deg) translateY(-2px) translateX(-2px);
@@ -38,7 +39,6 @@
   max-height: 200px;
   box-sizing: content-box;
   transition: max-height .2s ease;
-  overflow: hidden;
 
   &.ad-select--down {
     padding-top: 4px;

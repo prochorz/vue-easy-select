@@ -1,6 +1,6 @@
 import type { Component } from 'vue'
 
-import { h } from 'vue'
+import { h, defineComponent} from 'vue'
 
 import { useProvide } from '../../use/use-context';
 import {
@@ -10,27 +10,27 @@ import {
     componentProps
 } from '../../constants/global-props-constants';
 
-const Single = {
+const Single = defineComponent({
     props: {
-        ...singleProps,
-        ...componentProps
+        ...componentProps,
+        ...singleProps
     },
     setup(props, ctx) {
         useProvide(props, ctx);
         return ctx.slots.default;
     }
-};
+});
 
-const Multiple = {
+const Multiple = defineComponent({
     props: {
-        ...multipleProps,
-        ...componentProps
+        ...componentProps,
+        ...multipleProps
     },
     setup(props, ctx) {
         useProvide(props, ctx);
         return ctx.slots.default;
     }
-};
+});
 
 function ADWrapper(props, ctx) {
     const isMultiple = props.isMultiple;
@@ -38,7 +38,7 @@ function ADWrapper(props, ctx) {
     const localProps = Object.keys(localComponent.props).reduce((acc, key) => {
         acc[key] = props[key];
         return acc;
-    }, {});
+    }, {} as any);
 
     return h(localComponent as Component, { ...ctx.attrs, ...localProps }, ctx.slots)
 }

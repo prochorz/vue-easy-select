@@ -1,25 +1,30 @@
 <template>
-    <ul class="ad-options">
-        <li
-            v-for="(item, index) in optionsList"
-            :key="item[globalProps.keyField]"
-            role="option"
-            class="dropdown__item"
-            @click="clickHandler(item)"
-        >
-            <slot
-                :item="localOptions[index]"
-                name="item"
+    <div class="ad-options">
+        <div v-if="!optionsList.length">
+            empty
+        </div>
+        <ul class="ad-options__list">
+            <li
+                v-for="(item, index) in optionsList"
+                :key="item.key"
+                role="option"
+                class="dropdown__item"
+                @click="clickHandler(item)"
             >
-                <div
-                    :class="item.additionalClass"
-                    class="dropdown__item-inner"
+                <slot
+                    :item="localOptions[index]"
+                    name="item"
                 >
-                    {{ item[globalProps.nameField] }}
-                </div>
-            </slot>
-        </li>
-    </ul>
+                    <div
+                        :class="item.additionalClass"
+                        class="dropdown__item-inner"
+                    >
+                        {{ item[globalProps.nameField] }}
+                    </div>
+                </slot>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>

@@ -14,9 +14,10 @@ import { isObject } from '../services/data-services';
 import { selectInjectionKey } from '../constants/app-constants';
 
 function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, { emit }: SetupContext) {
-
     const localValue = computed({
-        get: () => props.modelValue,
+        get: () => {
+            return props.modelValue;
+        },
         set(value) {
             /**
              * Emit on change input value
@@ -47,10 +48,11 @@ function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, {
     const localOptions = computed(() => {
         return normalizeOptions.value.map(option => {
             const isChecked = checkSelectedValue(option[props.keyField]);
-            const isDisabled = props.isDisabled || option[props.disabledField];
+            const isDisabled = props.isDisabled || option[props.disabledField] || false;
 
             return {
                 ...option,
+                key: `${option[props.keyField]}_${option[props.nameField]}`,
                 isChecked,
                 [props.disabledField]: isDisabled
             };

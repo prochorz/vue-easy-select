@@ -1,5 +1,5 @@
 <template>
-  <ADWrapper v-bind="{ ...$props, ...$attrs }">
+  <ADWrapper v-bind="localBind">
       <div
         ref="refControl"
         :class="[disabledClass, openClass]"
@@ -63,22 +63,24 @@ const MAX_HEIGHT = 200;
 export default defineComponent({
     name: 'ADSelect',
     props: {
-        ...stubProps,
-        ...componentProps
+        ...componentProps,
+        ...stubProps
     },
     components: {
         ADWrapper,
         ADControl,
         ADOptions
     },
-    setup(props) {
+    setup(props, { attrs }) {
         const isOpen = ref(false);
         const dropdownStyle = ref({});
 
-        const refControl = ref(null);
-        const refDropdown = ref(null);
+        const refControl = ref();
+        const refDropdown = ref();
 
-        const dropdownClass = ref(null);
+        const localBind = computed(() => ({ ...props, ...attrs }));
+
+        const dropdownClass = ref();
         const openClass = computed(() => isOpen.value ? 'ad-select--open' : null)
         const disabledClass = computed(() => props.isDisabled ? 'ad-select--disabled' : null)
 
@@ -112,9 +114,7 @@ export default defineComponent({
         }
 
         function selectHandler() {
-            const isToggleExist = !props.isMultiple && props.isAllowEmpty;
-
-            if (isToggleExist) {
+            if (!props.isMultiple) {
                 toggleHandler();
             }
         }
@@ -138,6 +138,7 @@ export default defineComponent({
 
         return {
             isOpen,
+            localBind,
             openClass,
             refControl,
             refDropdown,
