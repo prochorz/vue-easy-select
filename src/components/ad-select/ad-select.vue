@@ -6,7 +6,10 @@
         class="ad-select__control"
         @click="toggleHandler"
       >
-          <ADControl @@resize="updateDropdownStyle">
+          <ADControl
+              :is-open="isOpen"
+              @@resize="updateDropdownStyle"
+          >
               <template #arrow>
                   <slot name="arrow" :is-open="isOpen">
                       <i class="ad-select__arrow-icon" />

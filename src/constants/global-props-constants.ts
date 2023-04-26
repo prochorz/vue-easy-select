@@ -1,4 +1,5 @@
 import type { PropType } from 'vue';
+import {E_SEARCH_POSITION} from "./component-constants";
 
 const singleProps = {
     /**
@@ -67,6 +68,35 @@ const componentProps = {
     name: {
         type: String,
         required: true
+    },
+    /**
+     * Search model Value
+     */
+    searchPosition: {
+        type: String,
+        default: E_SEARCH_POSITION.CONTROL,
+        validator: (value: E_SEARCH_POSITION) => Object.values(E_SEARCH_POSITION).includes(value)
+    },
+    /**
+     * Search model Value
+     */
+    searchValue: {
+        type: String,
+        default: ''
+    },
+    /**
+     * Edited placeholder
+     */
+    searchPlaceholder: {
+        type: String,
+        default: ''
+    },
+    /**
+     * Disable filter options by search value
+     */
+    isRemoteSearch: {
+        type: Boolean,
+        default: false
     },
     /**
      * Flag for enable search in select

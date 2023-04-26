@@ -7,13 +7,14 @@ import type { SetupContext } from '@vue/runtime-core';
 import {
     computed,
     inject,
-    provide
+    provide, ref
 } from 'vue';
 
 import { isObject } from '../services/data-services';
 import { selectInjectionKey } from '../constants/app-constants';
 
 function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, { emit }: SetupContext) {
+    const optionalLocalSearch = ref('');
     const localValue = computed({
         get: () => {
             return props.modelValue;
@@ -24,6 +25,19 @@ function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, {
              * @property { String | Array } value
              */
             emit('update:modelValue', value);
+        }
+    });
+
+    const localSearch = computed({
+        get: () => props.searchValue || optionalLocalSearch.value,
+        set: (value: string) => {
+            optionalLocalSearch.value = value;
+
+            /**
+             * Emitted when search changed
+             * @property { String } value
+             */
+            emit('update:searchValue', value);
         }
     });
 
@@ -46,7 +60,9 @@ function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, {
     });
 
     const localOptions = computed(() => {
-        return normalizeOptions.value.map(option => {
+        const isFilterExist = !props.isRemoteSearch && Boolean(localSearch.value);
+
+        const options = normalizeOptions.value.map(option => {
             const isChecked = checkSelectedValue(option[props.keyField]);
             const isDisabled = props.isDisabled || option[props.disabledField] || false;
 
@@ -57,6 +73,15 @@ function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, {
                 [props.disabledField]: isDisabled
             };
         });
+
+        return isFilterExist
+            ? options.filter((option: ISelectOption) => {
+                const name = option[props.nameField].toLowerCase();
+                const value = localSearch.value.toLowerCase();
+
+                return name.includes(value);
+            })
+            : options;
     });
 
     const currentState = computed(() => {
@@ -89,6 +114,7 @@ function useProvide<Props extends Record<string, any>>(props: Readonly<Props>, {
         globalProps: props,
         currentState,
         localValue,
+        localSearch,
         localOptions,
         normalizeOptions,
         selectHandler,

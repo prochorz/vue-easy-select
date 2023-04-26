@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { Meta, Story } from "@storybook/vue3";
 
 import AdSelect from './index';
+import {E_SEARCH_POSITION} from "../../constants/component-constants";
 
 type TProps = typeof AdSelect.props;
 
@@ -11,6 +12,7 @@ export default {
     argTypes: {
         isMultiple: { control: { type: 'boolean' } },
         isAllowEmpty: { control: { type: 'boolean' } },
+        searchPosition: { control: { type: 'select' }, options: Object.values(E_SEARCH_POSITION) },
     },
 } as Meta;
 
@@ -39,10 +41,13 @@ const defaultArgs = {
 const Template: Story<TProps> = (args) => ({
     components: { AdSelect },
     data: () => ({ args }),
-    template: `<AdSelect
+    template: `
+      <AdSelect
         v-bind="args"
         v-model="args.modelValue"
-    />`,
+        v-model:searchValue="args.searchValue"
+      />
+    `,
 });
 
 export const Base = Object.assign(Template.bind({}), {
@@ -61,6 +66,8 @@ export const Multiple = Object.assign(Template.bind({}), {
 export const Search = Object.assign(Template.bind({}), {
     args: {
         ...defaultArgs,
+        searchValue: 'Berlin',
+        searchPlaceholder: 'Search',
         isSearchable: true
     }
 });

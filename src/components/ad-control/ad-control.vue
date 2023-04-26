@@ -5,18 +5,23 @@
     class="ad-control"
   >
       <div class="input__content">
-          <span v-if="isEmptyValue">
-              {{ placeholder }}
-          </span>
+          <AdStateSearch
+            v-if="isSearchableExist"
+          />
           <template v-else>
-              <slot name="state" :state="currentState">
-                  <AdStateMultiple v-if="isMultiple" />
-                  <template v-else>
-                    <span>
-                      {{ localValueName }}
-                    </span>
-                  </template>
-              </slot>
+            <span v-if="isEmptyValue">
+                {{ globalProps.placeholder }}
+            </span>
+            <template v-else>
+                <slot name="state" :state="currentState">
+                    <AdStateMultiple v-if="isMultiple" />
+                    <template v-else>
+                      <span>
+                        {{ localValueName }}
+                      </span>
+                    </template>
+                </slot>
+            </template>
           </template>
       </div>
       <div
@@ -42,22 +47,31 @@ import {
 } from 'vue';
 
 import NativeSelect from '../native-select';
+import AdStateSearch from '../ad-state-search';
 import AdStateMultiple from '../ad-state-multiple';
 
 import { useInject } from '../../use/use-context';
 import useResizeObserver from '../../use/use-resize-observer';
+import {E_SEARCH_POSITION} from "../../constants/component-constants";
 
 export default defineComponent({
     name: "ADControl",
     components: {
         NativeSelect,
+        AdStateSearch,
         AdStateMultiple
+    },
+    props: {
+        isOpen: {
+            type: Boolean,
+            default: false
+        }
     },
     emits: {
         '@resize': null,
         'update:modelValue': null
     },
-    setup(_, { emit }) {
+    setup(props, { emit }) {
         const {
             currentState,
             globalProps,
@@ -69,7 +83,9 @@ export default defineComponent({
 
         const { height } = useResizeObserver(refContent);
 
-        const { placeholder, isSearchable } = toRefs(globalProps);
+        const isSearchableExist = computed(() => {
+            return globalProps.searchPosition === E_SEARCH_POSITION.CONTROL && globalProps.isSearchable && props.isOpen
+        });
         const isMultiple = computed(() => Boolean(globalProps.isMultiple));
 
         const disabledClass = computed(() => globalProps.isDisabled ? 'input--disabled' : null)
@@ -94,12 +110,12 @@ export default defineComponent({
 
         return {
             refContent,
+            isSearchableExist,
+            globalProps,
             currentState,
-            placeholder,
             isMultiple,
             isEmptyValue,
             localValue,
-            globalProps,
             localOptions,
             disabledClass,
             localValueName
