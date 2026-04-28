@@ -1,8 +1,8 @@
-function debounce(func, timeout = 100){
-    let timer;
-    return (...args) => {
+function debounce<F extends (...args: any[]) => void>(func: F, timeout = 100) {
+    let timer: ReturnType<typeof setTimeout>;
+    return (...args: Parameters<F>) => {
         clearTimeout(timer);
-        timer = setTimeout(func.bind(this), timeout, ...args);
+        timer = setTimeout(() => func(...args), timeout);
     };
 }
 

@@ -106,6 +106,13 @@ const componentProps = {
         default: false
     },
     /**
+     * Render a clear button in the control (opt-in). Nothing renders by default.
+     */
+    isClearable: {
+        type: Boolean,
+        default: false
+    },
+    /**
      * Enable/Disable input field
      */
     isDisabled: {

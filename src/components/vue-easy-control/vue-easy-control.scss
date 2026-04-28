@@ -1,0 +1,79 @@
+.vue-easy-control {
+  cursor: pointer;
+  color: #495057;
+  min-height: 40px;
+  display: flex;
+  background: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  gap: 4px;
+
+  &.vue-easy-control--disabled {
+    cursor: auto;
+    color: #a7acb0;
+  }
+
+  .vue-easy-control__content {
+    flex: 1;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .vue-easy-control__arrow {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+  }
+
+  .vue-easy-control__clear {
+    flex: none;
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    color: #6c757d;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      color: #343a40;
+    }
+  }
+
+  .vue-easy-control__clear-icon {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background: currentColor;
+      border-radius: 1px;
+    }
+
+    &::before {
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    &::after {
+      transform: translateY(-50%) rotate(-45deg);
+    }
+  }
+}

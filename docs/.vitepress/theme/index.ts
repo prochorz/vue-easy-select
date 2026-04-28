@@ -1,21 +1,27 @@
-import { Dropdown } from 'floating-vue';
 import DefaultTheme from 'vitepress/theme';
-import 'floating-vue/dist/style.css';
 
 import {
-    ADSelect,
-    ADControl,
-    ADOptions,
-    ADWrapper
+    VueEasySelect,
+    VueEasyControl,
+    VueEasyOptions,
+    VueEasyWrapper
 } from '../../../src';
+
+import DemoCard from './components/DemoCard.vue';
 
 export default {
     extends: DefaultTheme,
-    enhanceApp({ app }: any) {
-        app.component('VDropdown', Dropdown);
-        app.component('ADSelect', ADSelect);
-        app.component('ADControl', ADControl);
-        app.component('ADOptions', ADOptions);
-        app.component('ADWrapper', ADWrapper);
+    async enhanceApp({ app }: any) {
+        app.component('VueEasySelect', VueEasySelect);
+        app.component('VueEasyControl', VueEasyControl);
+        app.component('VueEasyOptions', VueEasyOptions);
+        app.component('VueEasyWrapper', VueEasyWrapper);
+        app.component('DemoCard', DemoCard);
+
+        if (typeof window !== 'undefined') {
+            const { Dropdown } = await import('floating-vue');
+            await import('floating-vue/dist/style.css');
+            app.component('VDropdown', Dropdown);
+        }
     }
 }

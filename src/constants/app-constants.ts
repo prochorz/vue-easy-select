@@ -1,1 +1,1 @@
-export const selectInjectionKey = Symbol();
+export const selectInjectionKey = Symbol('vue-easy-select');

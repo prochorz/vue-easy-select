@@ -1,0 +1,62 @@
+.vue-easy-select__control {
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+
+  &.vue-easy-select--disabled {
+    border-color: #e1e5e8;
+  }
+
+  &.vue-easy-select--open {
+    .vue-easy-select__arrow-icon {
+      transform: rotate(-135deg) translateY(-1px) translateX(-1px);
+    }
+  }
+
+  .vue-easy-select__arrow-icon {
+    box-sizing: border-box;
+    width: 9px;
+    height: 9px;
+    transform: rotate(45deg) translateY(-2px) translateX(-2px);
+    border: solid #6c757d;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    vertical-align: middle;
+  }
+
+  &:not(.vue-easy-select--disabled):hover,
+  &.vue-easy-select--open {
+    border-color: #3B82F6;
+  }
+}
+
+.vue-easy-select__dropdown {
+  position: absolute;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  max-height: 200px;
+  box-sizing: content-box;
+  transition: max-height .2s ease;
+
+  &.vue-easy-select--down {
+    padding-top: 4px;
+  }
+
+  &.vue-easy-select--up {
+    padding-bottom: 4px;
+  }
+
+  &.roll-enter-from,
+  &.roll-leave-to {
+    max-height: 0 !important;
+  }
+
+  .vue-easy-select__dropdown-inner {
+    border-radius: 4px;
+    max-height: inherit;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    overflow: auto;
+  }
+}

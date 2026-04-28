@@ -17,19 +17,10 @@
     </select>
 </template>
 
-<script>
+<script setup lang="ts">
 import { useInject } from "../../use/use-context";
 
-export default {
-    name: "NativeSelect",
-    setup() {
-        const { globalProps, localValue, localOptions } = useInject();
+defineOptions({ name: 'NativeSelect' });
 
-        return {
-            localValue,
-            globalProps,
-            localOptions
-        };
-    }
-}
+const { globalProps, localValue, localOptions } = useInject();
 </script>

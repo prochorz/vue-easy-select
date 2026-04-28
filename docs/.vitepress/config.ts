@@ -2,30 +2,24 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "ADvancedSelect",
-  description: "A VitePress Site",
+  title: "VueEasySelect",
+  description: "Flexible select component for Vue 3",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'VueEasySelect', link: '/vue-easy-select' }
     ],
 
     sidebar: [
       {
-        text: 'Examples',
+        text: 'Components',
         items: [
-          { text: 'AD Wrapper', link: '/ad-wrapper' },
-          { text: 'AD Select', link: '/ad-select' },
-          { text: 'AD Multiple Select', link: '/ad-multiple-select' },
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'VueEasySelect', link: '/vue-easy-select' },
+          { text: 'VueEasySelect (multiple)', link: '/vue-easy-multiple-select' },
+          { text: 'VueEasyWrapper', link: '/vue-easy-wrapper' }
         ]
       }
-    ],
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ]
   }
 })

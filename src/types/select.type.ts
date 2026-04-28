@@ -5,7 +5,7 @@ interface ISelectOption {
     [key: string]: any
 }
 
-export {
+export type {
     TModelValue,
     ISelectOption
 };

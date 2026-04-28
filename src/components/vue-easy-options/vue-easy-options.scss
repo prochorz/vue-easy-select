@@ -1,0 +1,71 @@
+.vue-easy-options {
+  background: #fff;
+
+  .vue-easy-options__search {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 8px 12px;
+    background: inherit;
+    border-bottom: 1px solid #e1e5e8;
+  }
+
+  &.vue-easy-options--has-search {
+    scroll-padding-top: 48px;
+  }
+
+  .vue-easy-options__list {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .vue-easy-options__empty {
+    padding: 12px;
+    color: #a7acb0;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  // The <li> carries only semantics (role/aria/events). No visual state
+  // classes live here — that way consumers who supply a custom #item
+  // slot inherit no visual opinions from the library.
+  .vue-easy-options__item {
+    cursor: pointer;
+    margin: 0;
+    border: 0 none;
+    border-radius: 0;
+  }
+
+  // Default chrome for the built-in option row only. Consumers who
+  // provide a custom #item slot render whatever they want and inherit
+  // nothing from here. For them, active/checked/disabled state is
+  // exposed via the scoped slot (item.isChecked, isActive, etc.).
+  .vue-easy-options__item-inner {
+    box-sizing: border-box;
+    padding: 8px 12px;
+    height: 40px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #495057;
+  }
+
+  .vue-easy-options__item-inner--active {
+    background: #e9ecef;
+  }
+
+  .vue-easy-options__item-inner--checked {
+    color: #1D4ED8;
+    background: #EFF6FF;
+  }
+
+  .vue-easy-options__item-inner--active.vue-easy-options__item-inner--checked {
+    background: #dbeafe;
+  }
+
+  .vue-easy-options__item-inner--disabled {
+    cursor: auto;
+    color: #a7acb0;
+  }
+}
