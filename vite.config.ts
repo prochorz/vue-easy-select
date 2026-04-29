@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
@@ -11,9 +12,16 @@ export default defineConfig({
     libInjectCss(),
     dts({
       include: ['src'],
+      exclude: ['**/*.spec.ts', '**/__tests__/**'],
       rollupTypes: true
     })
   ],
+  test: {
+    environment: 'happy-dom',
+    globals: true,
+    setupFiles: ['./tests/setup.ts'],
+    include: ['src/**/*.spec.ts']
+  },
   build: {
     emptyOutDir: false,
     copyPublicDir: false,
