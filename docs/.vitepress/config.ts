@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/vue-easy-select/',
   title: "VueEasySelect",
   description: "Flexible select component for Vue 3",
   themeConfig: {
