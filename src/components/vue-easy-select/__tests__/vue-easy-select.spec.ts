@@ -33,6 +33,19 @@ const isOpen = (wrapper: any) =>
     findControl(wrapper).attributes('aria-expanded') === 'true'
 
 describe('VueEasySelect', () => {
+    describe('name (form mirror)', () => {
+        it('renders the hidden native <select> when name is set', () => {
+            const wrapper = mountSelect('', { name: 'city', options: makeNamedOptions('A') })
+            expect(wrapper.find('select').exists()).toBe(true)
+            expect(wrapper.find('select').attributes('name')).toBe('city')
+        })
+
+        it('does NOT render the native <select> when name is omitted', () => {
+            const wrapper = mountSelect('', { options: makeNamedOptions('A') })
+            expect(wrapper.find('select').exists()).toBe(false)
+        })
+    })
+
     describe('open / close', () => {
         it('starts closed', () => {
             const wrapper = mountSelect('', { name: 'x', options: makeNamedOptions('A', 'B') })

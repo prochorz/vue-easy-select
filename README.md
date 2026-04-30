@@ -20,7 +20,15 @@ Off-the-shelf select components are a dead end — they ship a visual design you
 npm install vue-easy-select
 ```
 
-Peer dependency: `vue ^3.3.6`.
+Peer dependency: `vue ^3.3.6`. Zero runtime dependencies of its own.
+
+## Footprint & runtime
+
+- **Size**: ~12 kB gzip / ~28 kB raw / 43.7 kB unpacked, single ESM entry, no transitive deps.
+- **CSS auto-injection**: a tiny SSR-safe IIFE appends a `<style>` tag at first import — no separate stylesheet to import, no FOUC, no CSS loader required. Works inside a bundler **and** in raw `<script type="module">` setups.
+- **SSR-safe**: the injection is gated by `typeof document !== 'undefined'`, so the bundle imports cleanly on the server. Vue components themselves render fine in SSR; styles attach on hydration.
+- **Tree-shaking**: ships as one ESM entry, so when you import only `VueEasySelect`, bundlers can drop unused named exports. The CSS injection is a single top-level side-effect and stays in.
+- **TypeScript**: full `.d.ts` bundled (`dist/index.d.ts`).
 
 ## Usage
 
@@ -39,7 +47,7 @@ Or import the components you need:
 import { VueEasySelect, VueEasyWrapper, VueEasyControl, VueEasyOptions } from 'vue-easy-select'
 ```
 
-Styles are bundled with the library and auto-injected by your bundler — no separate CSS import is required. (If you really need to import the CSS file standalone, it's still available at `vue-easy-select/style.css`.)
+No separate CSS import is needed — styles are inlined into the bundle and injected on first import.
 
 ### Basic
 
@@ -47,7 +55,6 @@ Styles are bundled with the library and auto-injected by your bundler — no sep
 <template>
     <VueEasySelect
         v-model="value"
-        name="city"
         :options="options"
         placeholder="Pick a city"
     />
@@ -64,12 +71,13 @@ const options = [
 </script>
 ```
 
+> Pass `name="..."` if you need a hidden native `<select>` mirror for form submission. Otherwise omit it — no extra DOM is rendered.
+
 ### Multiple + searchable
 
 ```vue
 <VueEasySelect
     v-model="value"
-    name="cities"
     :options="options"
     :is-multiple="true"
     :is-searchable="true"
@@ -82,7 +90,7 @@ const options = [
 Use the primitives directly when you need your own positioning:
 
 ```vue
-<VueEasyWrapper v-model="value" name="select" :options="options">
+<VueEasyWrapper v-model="value" :options="options">
     <Dropdown auto-size="min">
         <template #default="{ shown }">
             <VueEasyControl>
@@ -100,7 +108,7 @@ Use the primitives directly when you need your own positioning:
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `name` | `string` | — | Name of the hidden native `<select>` (required) |
+| `name` | `string` | `''` | Name of the hidden native `<select>` mirror. When set, a hidden `<select>` is rendered for form submission and assistive tech. Leave empty if you don't need it (e.g. filters, standalone widgets). |
 | `options` | `Array<any>` | `[]` | Options — object array or plain `string[]` |
 | `keyField` | `string` | `'id'` | Object field used as option value |
 | `nameField` | `string` | `'name'` | Object field used as visible label |
@@ -112,7 +120,7 @@ Use the primitives directly when you need your own positioning:
 | `isRemoteSearch` | `boolean` | `false` | Don't filter options locally — consumer controls `options` |
 | `searchValue` | `string` | `''` | v-model-able search value |
 | `searchPlaceholder` | `string` | `''` | Placeholder for search input |
-| `searchPosition` | `'control' \| 'options'` | `'control'` | Where to render the search input |
+| `searchPosition` | `string` | `'control'` | Where to render the search input. One of `'control'` or `'options'`. |
 
 ### Mode-specific
 

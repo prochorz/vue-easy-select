@@ -63,11 +63,14 @@ const stubProps = {
 
 const componentProps = {
     /**
-     * Select name
+     * Name of the hidden native <select> mirror. When set, a hidden
+     * <select> is rendered so the value participates in form submits
+     * and assistive tech announcements. When omitted, no native mirror
+     * is rendered at all — useful for filters/standalone widgets.
      */
     name: {
         type: String,
-        required: true
+        default: ''
     },
     /**
      * Search model Value
