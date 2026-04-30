@@ -37,12 +37,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pzimon/vue-easy-select.git"
+    "url": "git+https://github.com/prochorz/vue-easy-select.git"
   },
   "bugs": {
-    "url": "https://github.com/pzimon/vue-easy-select/issues"
+    "url": "https://github.com/prochorz/vue-easy-select/issues"
   },
-  "homepage": "https://github.com/pzimon/vue-easy-select#readme",
+  "homepage": "https://github.com/prochorz/vue-easy-select#readme",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
