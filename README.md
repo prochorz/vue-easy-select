@@ -29,7 +29,6 @@ Register globally:
 ```ts
 import { createApp } from 'vue'
 import VueEasySelect from 'vue-easy-select'
-import 'vue-easy-select/style.css'
 
 createApp(App).use(VueEasySelect).mount('#app')
 ```
@@ -38,8 +37,9 @@ Or import the components you need:
 
 ```ts
 import { VueEasySelect, VueEasyWrapper, VueEasyControl, VueEasyOptions } from 'vue-easy-select'
-import 'vue-easy-select/style.css'
 ```
+
+Styles are bundled with the library and auto-injected by your bundler — no separate CSS import is required. (If you really need to import the CSS file standalone, it's still available at `vue-easy-select/style.css`.)
 
 ### Basic
 
