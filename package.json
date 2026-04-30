@@ -1,6 +1,6 @@
 {
   "name": "vue-easy-select",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Flexible select component for Vue 3 — composable primitives plus a ready-to-use opinionated select. Single/multiple, searchable, slot-driven, form-friendly.",
   "type": "module",
   "main": "./dist/index.js",
