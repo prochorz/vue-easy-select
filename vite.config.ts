@@ -2,14 +2,14 @@
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import { libInjectCss } from 'vite-plugin-lib-inject-css'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import { resolve } from 'node:path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    libInjectCss(),
+    cssInjectedByJsPlugin(),
     dts({
       include: ['src'],
       exclude: ['**/*.spec.ts', '**/__tests__/**'],
