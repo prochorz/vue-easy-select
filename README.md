@@ -1,5 +1,7 @@
 # vue-easy-select
 
+📖 **[Live demo & docs →](https://prochorz.github.io/vue-easy-select/)**
+
 Flexible select component for Vue 3 — composable primitives (`VueEasyWrapper`, `VueEasyControl`, `VueEasyOptions`) plus an opinionated ready-to-use `VueEasySelect`. Supports single/multiple modes, searchable options (local & remote), custom slots for control/item/arrow, and mirrors a hidden native `<select>` for form compatibility.
 
 ## Philosophy

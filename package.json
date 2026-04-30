@@ -42,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/prochorz/vue-easy-select/issues"
   },
-  "homepage": "https://github.com/prochorz/vue-easy-select#readme",
+  "homepage": "https://prochorz.github.io/vue-easy-select/",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
